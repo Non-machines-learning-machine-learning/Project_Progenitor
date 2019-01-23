@@ -1,0 +1,91 @@
+from timeit import default_timer as timer
+from math import ceil, floor
+import time
+from functools import reduce
+
+def time_func(func, *args, iterat=100):
+    "Average run time of a function"
+    times = [1.0, 2.0, 3.0] ######### testing
+    # for _ in range(iterat):
+            # start_time = timer()
+            # func(*args)
+            # times.append(timer() - start_time)
+    return str(func) + ' average run time of ' + str(sig_figures(get_average(times),3)) + ' and variance of ' + str(+ sig_figures(get_variance(times),3))
+
+
+#### Fix for when places < len of number 
+####################################################################
+
+def dec_places(num, places):
+     """Returns float limited to decimal places"""
+     num_iter = iter(repr(num))
+     num_out = ''
+     for c in num_iter:
+         if c != '.':
+             num_out += c
+         else:
+             num_out += c
+             for _ in range(places):
+                 num_out += num_iter.__next__()
+             return float(num_out)
+
+def sig_figures(num, places):
+    """Returns float limited to significant figures"""
+    places_ = places
+    num_str = repr(num)
+    num_str_whole = repr(floor(num))
+    num_out = ''
+    if len(num_str_whole) > places: # for no need to consider decimal
+        for i in range(places):
+            num_out += num_str[i] # add figure for each place 
+        for _ in range(len(num_str_whole) - places): # add trailing zeros
+            num_out += '0'
+    else:
+        num_out = num_str_whole + '.' #add whole numbers
+        places_ = places - len(num_str_whole)
+        decimal = dec_places(float(num_str) - float(num_str_whole), places_)
+        num_out += repr(decimal)[2:]
+    return float(num_out)
+
+
+def get_average(num_list):
+    """Return float average of number list"""
+    try:
+        return reduce(lambda x, y: x + y, num_list) / len(num_list)
+    except:
+        raise ValueError("Invalid type entered")
+
+
+def get_variance(num_list):
+    """Return the float variance of number list"""
+    try:
+        return sum((get_average(num_list) - value) ** 2 for value in num_list) / len(num_list)
+    except:
+        raise ValueError("Invalid type entered")
+
+
+
+def test():
+    time.sleep(0.05)
+    return
+
+print(time_func(test))
+
+
+
+
+def binary_search(alist, item):
+    "Using binary search algorithm to search a sorted list"
+    search_start = 0
+    search_end = len(alist) - 1 
+    while True:
+        midpoint = ceil((search_start + search_end) / 2)
+        if alist[midpoint] == item:
+            return True
+        if search_start == midpoint or search_end == midpoint:
+            return False
+        if alist[midpoint] > item:
+            search_end = midpoint
+        else:
+            search_start = midpoint
+
