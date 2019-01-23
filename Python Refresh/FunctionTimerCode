@@ -13,7 +13,7 @@ def time_func(func, *args, iterat=100):
     return str(func) + ' average run time of ' + str(sig_figures(get_average(times),3)) + ' and variance of ' + str(+ sig_figures(get_variance(times),3))
 
 
-#### Fix for when places < len of number 
+### Fix for when places < len of number 
 ####################################################################
 
 def dec_places(num, places):
