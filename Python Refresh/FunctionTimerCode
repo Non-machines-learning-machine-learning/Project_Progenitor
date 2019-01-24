@@ -5,47 +5,47 @@ from functools import reduce
 
 def time_func(func, *args, iterat=100):
     "Average run time of a function"
-    times = [1.0, 2.0, 3.0] ######### testing
-    # for _ in range(iterat):
-            # start_time = timer()
-            # func(*args)
-            # times.append(timer() - start_time)
-    return str(func) + ' average run time of ' + str(sig_figures(get_average(times),3)) + ' and variance of ' + str(+ sig_figures(get_variance(times),3))
+    times = []
+    for _ in range(iterat):
+            start_time = timer()
+            func(*args)
+            times.append(timer() - start_time)
+    return str(func) + ' average run time of ' + sig_figures(get_average(times),3) + ' and variance of ' + sig_figures(get_variance(times),3)
 
-
-### Fix for when places < len of number 
-####################################################################
+# Alter significant figures to not include initial 0. value as significant figure
+# Alter dec_places to not count initial .00 values as significant figure
+#### solution - add initial zero's to dec_places length 
 
 def dec_places(num, places):
-     """Returns float limited to decimal places"""
-     num_iter = iter(repr(num))
-     num_out = ''
-     for c in num_iter:
-         if c != '.':
-             num_out += c
-         else:
-             num_out += c
-             for _ in range(places):
-                 num_out += num_iter.__next__()
-             return float(num_out)
+     """Returns number in truncated string format limited to decimal places"""
+     assert type(num) is float, "num is not a float."
+     assert type(places) is int, "places is not an integer."
+     decimal_places = len(repr(num)) - len(repr(floor(num))) - 1
+     places = min(decimal_places, places)
+     num_out = str(floor(num)) + '.'
+     for i in range(len(num_out), len(num_out) + places):
+         num_out += str(num)[i]
+     if len(num_out) == len(repr(floor(num))) +1:
+         num_out += '0'
+     return num_out
 
 def sig_figures(num, places):
-    """Returns float limited to significant figures"""
-    places_ = places
-    num_str = repr(num)
-    num_str_whole = repr(floor(num))
+    """Returns number in truncated string format limited to significant figures"""
+    assert type(num) is float, "num is not a float."
+    assert type(places) is int, "places is not an integer."
     num_out = ''
-    if len(num_str_whole) > places: # for no need to consider decimal
-        for i in range(places):
-            num_out += num_str[i] # add figure for each place 
-        for _ in range(len(num_str_whole) - places): # add trailing zeros
-            num_out += '0'
+    # add whole digits
+    for i in range(min(len(repr(floor(num))), places)):
+        num_out += repr(num)[i]
+    # add whole trailing zeros
+    for i in range(max(0, len(repr(floor(num))) - places)):
+        num_out += '0'
+    # add decimal places
+    if len(repr(floor(num))) > places:
+        num_out += '.0'
     else:
-        num_out = num_str_whole + '.' #add whole numbers
-        places_ = places - len(num_str_whole)
-        decimal = dec_places(float(num_str) - float(num_str_whole), places_)
-        num_out += repr(decimal)[2:]
-    return float(num_out)
+        num_out = dec_places(num, places - len(repr(floor(num))))
+    return num_out
 
 
 def get_average(num_list):
@@ -64,9 +64,8 @@ def get_variance(num_list):
         raise ValueError("Invalid type entered")
 
 
-
 def test():
-    time.sleep(0.05)
+    time.sleep(0.005)
     return
 
 print(time_func(test))
