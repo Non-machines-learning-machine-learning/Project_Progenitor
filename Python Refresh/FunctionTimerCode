@@ -10,11 +10,7 @@ def time_func(func, *args, iterat=100):
             start_time = timer()
             func(*args)
             times.append(timer() - start_time)
-    return str(func) + ' average run time of ' + sig_figures(get_average(times),3) + ' and variance of ' + sig_figures(get_variance(times),3)
-
-# Alter significant figures to not include initial 0. value as significant figure
-# Alter dec_places to not count initial .00 values as significant figure
-#### solution - add initial zero's to dec_places length 
+    return str(func) + ' average run time of ' + sig_figures(get_average(times),3) + ' and deviation of ' + sig_figures(get_deviation(times),3)
 
 def dec_places(num, places):
      """Returns number in truncated string format limited to decimal places"""
@@ -22,12 +18,19 @@ def dec_places(num, places):
      assert type(places) is int, "places is not an integer."
      decimal_places = len(repr(num)) - len(repr(floor(num))) - 1
      places = min(decimal_places, places)
+     for i in range(len(repr(floor(num)))+1, len(repr(num))):
+         if repr(num)[i] == '0':
+             places += 1
+         else:
+             break
+     places = min(places, decimal_places)
      num_out = str(floor(num)) + '.'
      for i in range(len(num_out), len(num_out) + places):
-         num_out += str(num)[i]
+         num_out += repr(num)[i]
      if len(num_out) == len(repr(floor(num))) +1:
          num_out += '0'
      return num_out
+
 
 def sig_figures(num, places):
     """Returns number in truncated string format limited to significant figures"""
@@ -56,10 +59,11 @@ def get_average(num_list):
         raise ValueError("Invalid type entered")
 
 
-def get_variance(num_list):
-    """Return the float variance of number list"""
+def get_deviation(num_list):
+    """Return the float deviation of number list"""
+    average = get_average(num_list)
     try:
-        return sum((get_average(num_list) - value) ** 2 for value in num_list) / len(num_list)
+        return (sum((average - value) ** 2 for value in num_list) / len(num_list)) ** 0.5
     except:
         raise ValueError("Invalid type entered")
 
@@ -67,10 +71,6 @@ def get_variance(num_list):
 def test():
     time.sleep(0.005)
     return
-
-print(time_func(test))
-
-
 
 
 def binary_search(alist, item):
