@@ -1,3 +1,0 @@
-"Git test file"
-def test(a):
-    return a

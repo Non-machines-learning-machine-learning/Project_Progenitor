@@ -68,11 +68,6 @@ def get_deviation(num_list):
         raise ValueError("Invalid type entered")
 
 
-def test():
-    time.sleep(0.005)
-    return
-
-
 def binary_search(alist, item):
     "Using binary search algorithm to search a sorted list"
     search_start = 0
