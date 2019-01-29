@@ -2,39 +2,12 @@ import os
 import glob
 from functools import reduce
 from nltk.corpus import names
-from timeit import default_timer as timer
-from math import ceil
-
-def time_func(func, *args, iterations=1000):
-    "Average run time of a function"
-    average_times = []
-    for _ in range(3):
-        times = []
-        for _ in range(iterations):
-            start_time = timer()
-            func(*args)
-            times.append(timer() - start_time)
-        average_times.append(str(reduce(lambda x, y: x + y, times) / len(times)))
-    print(average_times)
-
-def binary_search(alist, item):
-    "Using binary search algorithm to search a sorted list"
-    search_start = 0
-    search_end = len(alist) - 1 
-    while True:
-        midpoint = ceil((search_start + search_end) / 2)
-        if alist[midpoint] == item:
-            return True
-        if search_start == midpoint or search_end == midpoint:
-            return False
-        if alist[midpoint] > item:
-            search_end = midpoint
-        else:
-            search_start = midpoint
+import FunctionTimerCode
 
 def get_text_files(file_path, encoding='UTF-8'):
+    """Return list of all text files in path"""
     file_list = []
-    for filename in glob.iglob(os.path.join(path1, '*.txt')):
+    for filename in glob.iglob(os.path.join(file_path, '*.txt')):
         with open(filename, 'r', encoding=encoding) as infile:
             file_list.append(infile.read())
     return file_list
@@ -57,14 +30,14 @@ def is_person_name3(astr):
 
 # print(time_func(is_person_name2, ['Daniel']))
 
-print(time_func(is_person_name3, 'Daniel'))
+# print(time_func(is_person_name3, 'Daniel'))
 
 
-path1 = 'enron1/spam/'
-path2 = 'enron1/ham/'
-encoding = 'ISO-8859-1'
-spam_emails = get_text_files(path1, encoding)
-ham_emails = get_text_files(path2, encoding)
+# path1 = 'enron1/spam/'
+# path2 = 'enron1/ham/'
+# encoding = 'ISO-8859-1'
+# spam_emails = get_text_files(path1, encoding)
+# ham_emails = get_text_files(path2, encoding)
 
 
 # all_names = set(names.words())
