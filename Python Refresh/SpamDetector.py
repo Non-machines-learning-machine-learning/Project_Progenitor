@@ -12,6 +12,7 @@ def get_text_files(file_path, encoding='UTF-8'):
             file_list.append(infile.read())
     return file_list
 
+
 def is_letter_only(astr):
     return astr.isalpha()
 
