@@ -12,5 +12,5 @@ def binary_search(alist, item):
         search_start = midpoint + 1
     elif alist[midpoint] > item:
         search_end = midpoint - 1
-    elif alist[midpoint] = item:
+    if alist[midpoint] == item:
         return True

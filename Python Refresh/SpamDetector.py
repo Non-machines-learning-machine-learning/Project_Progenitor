@@ -2,8 +2,8 @@ import os
 import glob
 from functools import reduce
 from nltk.corpus import names
-from FunctionTimerCode import time_func 
-from BinarySearch import binary_search
+from FunctionTimerCode import time_func
+from nltk.stem import WordNetLemmatizer
 
 def get_text_files(file_path, encoding='UTF-8'):
     """Return list of all text files in path"""
@@ -17,42 +17,19 @@ def is_letter_only(astr):
     return astr.isalpha()
 
 def is_person_name(astr):
-    all_names = iter(names.words())
-    return astr in all_names
-
-def is_person_name2(astr):
     return astr in names.words()
 
-def is_person_name3(astr):
-    return binary_search(names.words(), astr)
+path1 = '/Users/DC/Desktop/Python Machine Learning/Python Machine Learning by Example/enron1/spam/'
+path2 = '/Users/DC/Desktop/Python Machine Learning/Python Machine Learning by Example/enron1/ham/'
+spam_emails = get_text_files(path1, 'ISO-8859-1')
+ham_emails = get_text_files(path2, 'ISO-8859-1')
+all_names = set(names.words()) # Set of common names for reference.
 
 
-print(time_func(is_person_name, 'Daniel'))
-print(time_func(is_person_name2, 'Daniel'))
-time_func(is_person_name3, 'Daniel')
-
-# print(time_func(is_person_name, ['Daniel']))
-
-# print(time_func(is_person_name2, ['Daniel']))
-
-# print(time_func(is_person_name3, 'Daniel'))
+def stem(text_doc):
+    """Reduces each word in the text documment to their word stem, base or root form."""
+    lemmatizer = WordNetLemmatizer() 
+    # Stemmers remove morphological affixes from words, leaving only the word stem.
+    return ' '.join([lemmatizer.lemmatize(word.lower()) for word in text_doc.split()])
 
 
-# path1 = 'enron1/spam/'
-# path2 = 'enron1/ham/'
-# encoding = 'ISO-8859-1'
-# spam_emails = get_text_files(path1, encoding)
-# ham_emails = get_text_files(path2, encoding)
-
-
-# all_names = set(names.words())
-# lemmatizer = WordNetLemmatizer()
-
-# def clean_text(docs):
-#     cleaned_docs = []
-#     for doc in docs:
-#         cleaned_docs.append(' '.join([lemmatizer.lemmatize(word.lower())
-#             for word in doc.split()
-#             if letter_only(word)
-#             and word not in all_names]))
-#     return cleaned_docs
