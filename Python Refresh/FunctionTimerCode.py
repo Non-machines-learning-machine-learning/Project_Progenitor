@@ -1,7 +1,8 @@
 from timeit import default_timer as timer
-from math import ceil, floor
-import time
+from math import floor
 from functools import reduce
+# import time
+
 
 def time_func(func, *args, iterat=100):
     "Average run time of a function"
@@ -66,20 +67,4 @@ def get_deviation(num_list):
         return (sum((average - value) ** 2 for value in num_list) / len(num_list)) ** 0.5
     except:
         raise ValueError("Invalid type entered")
-
-
-def binary_search(alist, item):
-    "Using binary search algorithm to search a sorted list"
-    search_start = 0
-    search_end = len(alist) - 1 
-    while True:
-        midpoint = ceil((search_start + search_end) / 2)
-        if alist[midpoint] == item:
-            return True
-        if search_start == midpoint or search_end == midpoint:
-            return False
-        if alist[midpoint] > item:
-            search_end = midpoint
-        else:
-            search_start = midpoint
 

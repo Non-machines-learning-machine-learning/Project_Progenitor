@@ -2,7 +2,8 @@ import os
 import glob
 from functools import reduce
 from nltk.corpus import names
-import FunctionTimerCode
+from FunctionTimerCode import time_func 
+from BinarySearch import binary_search
 
 def get_text_files(file_path, encoding='UTF-8'):
     """Return list of all text files in path"""
@@ -11,7 +12,6 @@ def get_text_files(file_path, encoding='UTF-8'):
         with open(filename, 'r', encoding=encoding) as infile:
             file_list.append(infile.read())
     return file_list
-
 
 def is_letter_only(astr):
     return astr.isalpha()
@@ -26,6 +26,10 @@ def is_person_name2(astr):
 def is_person_name3(astr):
     return binary_search(names.words(), astr)
 
+
+print(time_func(is_person_name, 'Daniel'))
+print(time_func(is_person_name2, 'Daniel'))
+time_func(is_person_name3, 'Daniel')
 
 # print(time_func(is_person_name, ['Daniel']))
 
