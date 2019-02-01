@@ -3,6 +3,7 @@ import glob
 from functools import reduce
 from nltk.corpus import names
 from FunctionTimerCode import time_func
+from nltk.stem.porter import PorterStemmer
 from nltk.stem import WordNetLemmatizer
 
 def get_text_files(file_path, encoding='UTF-8'):
@@ -25,11 +26,23 @@ spam_emails = get_text_files(path1, 'ISO-8859-1')
 ham_emails = get_text_files(path2, 'ISO-8859-1')
 all_names = set(names.words()) # Set of common names for reference.
 
+def stem_word(word):
+    """Reduces word to stem, base or root form."""
+    porter_stemmer = PorterStemmer()
+    return porter_stemmer.stem(word)
 
-def stem(text_doc):
+#####rework for stem not lemmatizer#####
+def stem_doc(text_doc):
     """Reduces each word in the text documment to their word stem, base or root form."""
     lemmatizer = WordNetLemmatizer() 
     # Stemmers remove morphological affixes from words, leaving only the word stem.
     return ' '.join([lemmatizer.lemmatize(word.lower()) for word in text_doc.split()])
 
 
+
+    
+    
+    
+
+
+print(stem_word('walking'))
