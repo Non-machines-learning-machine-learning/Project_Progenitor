@@ -1,4 +1,4 @@
-Natural Language Toolkit, NLTK
+*** Natural Language Toolkit, NLTK
 
 * Tokenization 
 The process of demarcating and possibly classifying sections of a string of input characters. The resulting tokens are then passed on to some other form of processing.
@@ -46,3 +46,23 @@ Since the process may involve complex tasks such as understanding context and de
 Lemmatisation is closely related to stemming. The difference is that a stemmer operates on a single word without knowledge of the context, 
 and therefore cannot discriminate between words which have different meanings depending on part of speech. However, 
 stemmers are typically easier to implement and run faster, and the reduced accuracy may not matter for some applications.
+
+*** Scikit-Learn
+
+Text data needs to be tokenized before it can be used for predicitve modelling. 
+This processes parses text into words that are then encoded (Tokenizated) as integers or floating point values for use as inputs into machine
+learning algorithms (where feature extraction can occur). 
+
+Vectorization 
+    is the term for converting a scalar program to a vector program. Vectorized programs can run multiple operations 
+    from a single instruction, whereas scalar can only operate on pairs of operands at once.
+
+Bag-of-Words Model, or BoW
+    method of document classification where the (frequency of) occurrence of each word is used as a feature for training a classifier.
+     concerned with encoding schemes that represent what words are present or the degree to which they are present in 
+     encoded documents without any information about order.
+
+
+
+
+
