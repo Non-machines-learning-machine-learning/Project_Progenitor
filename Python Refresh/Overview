@@ -1,26 +1,26 @@
 *** Natural Language Toolkit, NLTK
 
-* Tokenization 
-The process of demarcating and possibly classifying sections of a string of input characters. The resulting tokens are then passed on to some other form of processing.
+Tokenization 
+    The process of demarcating and possibly classifying sections of a string of input characters. The resulting tokens are then passed on to some other form of processing.
 
-* Sentence boundary disambiguation (SBD)
-Also known as sentence breaking, is the problem in natural language processing of deciding where sentences begin and end.
-Sent_tokenize uses an instance of PunktSentenceTokenizer from the nltk. tokenize.punkt module. 
-This instance has already been trained on and works well for many European languages. 
-So it knows what punctuation and characters mark the end of a sentence and the beginning of a new sentence.
+Sentence boundary disambiguation (SBD)
+    Also known as sentence breaking, is the problem in natural language processing of deciding where sentences begin and end.
+    Sent_tokenize uses an instance of PunktSentenceTokenizer from the nltk. tokenize.punkt module. 
+    This instance has already been trained on and works well for many European languages. 
+    So it knows what punctuation and characters mark the end of a sentence and the beginning of a new sentence.
 
     from nltk.tokenize import sent_tokenize
     sent_tokenize_list = sent_tokenize(text)
 
-* Word Tokenizing
+Word Tokenizing
     from nltk.tokenize import word_tokenize
     word_tokenize(‘Hello World.’)
 
     This tokenizer is designed to work on a sentence at a time.
 
-* Part-of-speech (POS) tagging
-process of marking up a word in a text (corpus) as corresponding to a particular part of speech, based on both its definition, 
-as well as its context—i.e. relationship with adjacent and related words in a phrase, sentence, or paragraph.
+Part-of-speech (POS) tagging
+    process of marking up a word in a text (corpus) as corresponding to a particular part of speech, based on both its definition, 
+    as well as its context—i.e. relationship with adjacent and related words in a phrase, sentence, or paragraph.
 
     import nltk
     text = nltk.word_tokenize(“Dive into NLTK: Part-of-speech tagging and POS Tagger”)
@@ -29,23 +29,25 @@ as well as its context—i.e. relationship with adjacent and related words in a 
     NLTK provides documentation for each tag, which can be queried using the tag, e.g., 
     nltk.help.upenn_tagset(‘RB’),
 
-* Stemming 
-Process for reducing inflected (or sometimes derived) words to their stem, base or root form—generally a written word form.
-NLTK provides several famous stemmers interfaces, such as Porter stemmer, Lancaster Stemmer, Snowball Stemmer and etc.
+Stemming 
+    Process for reducing inflected (or sometimes derived) words to their stem, base or root form—generally a written word form.
+    NLTK provides several famous stemmers interfaces, such as Porter stemmer, Lancaster Stemmer, Snowball Stemmer and etc.
 
     from nltk.stem.porter import PorterStemmer
     porter_stemmer = PorterStemmer()
     porter_stemmer.stem(‘presumably’)
 
-* Lemmatization
-Process of grouping together the different inflected forms of a word so they can be analysed as a single item.
-lemmatisation is the algorithmic process of determining the lemma for a given word. 
-Since the process may involve complex tasks such as understanding context and determining the part of speech of a word in a sentence 
-(requiring, for example, knowledge of the grammar of a language) it can be a hard task to implement a lemmatiser for a new language.
+Lemmatization
+    Process of grouping together the different inflected forms of a word so they can be analysed as a single item.
+    lemmatisation is the algorithmic process of determining the lemma for a given word. 
+    Since the process may involve complex tasks such as understanding context and determining the part of speech of a word in a sentence 
+    (requiring, for example, knowledge of the grammar of a language) it can be a hard task to implement a lemmatiser for a new language.
 
-Lemmatisation is closely related to stemming. The difference is that a stemmer operates on a single word without knowledge of the context, 
-and therefore cannot discriminate between words which have different meanings depending on part of speech. However, 
-stemmers are typically easier to implement and run faster, and the reduced accuracy may not matter for some applications.
+    Lemmatisation is closely related to stemming. The difference is that a stemmer operates on a single word without knowledge of the context, 
+    and therefore cannot discriminate between words which have different meanings depending on part of speech. However, 
+    stemmers are typically easier to implement and run faster, and the reduced accuracy may not matter for some applications.
+
+
 
 *** Scikit-Learn
 
@@ -62,7 +64,38 @@ Bag-of-Words Model, or BoW
      concerned with encoding schemes that represent what words are present or the degree to which they are present in 
      encoded documents without any information about order.
 
+sklearn.feature_extraction.text.CountVectorizer
+
+    Converts a collection of text documents to a matrix of token counts. 
+    Matrix is of type; scipy.sparse.csr.csr_matrix. see https://cmdlinetips.com/2018/03/sparse-matrices-in-python-with-scipy/
+    Sparse matrix, a large matrix or 2d-array with a lot elements being zero, 
+    There are seven different types of SciPy sparse matrices, one used here is: csr_matrix: Compressed Sparse Row matrix
 
 
 
+*** classification
+
+    Binary classification: classifying observations into one of two possible classes
+    Multiclass classification:
+    Multi-label classification: classes are not disjointed (i.e both sea scape and sky scape painting)
+
+
+
+*** Naive Bayes
+
+    A type of probabilistic classifier that computers the probabilities of each predicitive feature (attribute) belonging
+    to each class to determine most-likely class fitting. * Naive because it assumes predictive features are mutually independant. 
+
+    Let A and B denote two events, then:
+    P(A|B) = [P(B|A)P(A)] / P(B)
+
+    P(A) is called the 'Prior': it portrays how classes are distributed with no knolwedge of observation features (i.e 40% spam)
+    
+
+    Example: (Check if correct!)
+    If A: Probability Spam,     B: Probability of word,     then:
+    P(Email is spam given that email contains word) = P(Word given email is spam)P(received spam email)  / P(probability of word)
+    P(Email is spam given that email contains word) = P(Word given email is spam)P(received spam email)  / P(word given that email is spam)P(spam) + P(word given that email is ham)P(ham)
+
+    
 

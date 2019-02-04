@@ -40,11 +40,14 @@ def clean_doc(text_doc):
 
 path1 = '/Users/DC/Desktop/Python Machine Learning/Python Machine Learning by Example/enron1/spam/'
 path2 = '/Users/DC/Desktop/Python Machine Learning/Python Machine Learning by Example/enron1/ham/'
-spam_emails = [clean_doc(doc) for doc in get_text_files(path1, 'ISO-8859-1')]
-ham_emails = [clean_doc(doc) for doc in get_text_files(path2, 'ISO-8859-1')]
+spam_emails = [clean_doc(doc) for doc in get_text_files(path1, 'ISO-8859-1')[0:50]] #limited set of emails for testing
+ham_emails = [clean_doc(doc) for doc in get_text_files(path2, 'ISO-8859-1')[0:50]] #limited set of emails for testing
 vectorizer = CountVectorizer(stop_words="english", max_features=500)
 vectorizer.fit(spam_emails + ham_emails)
 term_spam_emails = vectorizer.transform(spam_emails)
 term_ham_emails = vectorizer.transform(ham_emails)
 
+
+print(vectorizer.get_feature_names())
 print(term_ham_emails.toarray())
+
