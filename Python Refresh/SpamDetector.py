@@ -47,7 +47,9 @@ vectorizer.fit(spam_emails + ham_emails)
 term_spam_emails = vectorizer.transform(spam_emails)
 term_ham_emails = vectorizer.transform(ham_emails)
 
+#print(vectorizer.get_feature_names())
+#print(term_ham_emails.toarray())
 
-print(vectorizer.get_feature_names())
-print(term_ham_emails.toarray())
+spam_prior = len(spam_emails)/(len(spam_emails)+len(ham_emails))
+
 

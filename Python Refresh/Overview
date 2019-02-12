@@ -71,6 +71,10 @@ sklearn.feature_extraction.text.CountVectorizer
     Sparse matrix, a large matrix or 2d-array with a lot elements being zero, 
     There are seven different types of SciPy sparse matrices, one used here is: csr_matrix: Compressed Sparse Row matrix
 
+cv = CountVectorizer(....)
+cv.fit_transform(iterable of docs)
+
+    Returns a term-document matrix. docs listed in the first column of each row, words for each column of the first row, frequency populating
 
 
 *** classification
@@ -83,19 +87,23 @@ sklearn.feature_extraction.text.CountVectorizer
 
 *** Naive Bayes
 
-    A type of probabilistic classifier that computers the probabilities of each predicitive feature (attribute) belonging
+    ####review
+
+    A type of probabilistic classifier that computes the probabilities of each predicitive feature (attribute) belonging
     to each class to determine most-likely class fitting. * Naive because it assumes predictive features are mutually independant. 
 
     Let A and B denote two events, then:
     P(A|B) = [P(B|A)P(A)] / P(B)
 
-    P(A) is called the 'Prior': it portrays how classes are distributed with no knolwedge of observation features (i.e 40% spam)
+    P(B) is called the 'Prior': it portrays how classes are distributed with no knolwedge of observation features (i.e 40% spam)
     
 
     Example: (Check if correct!)
     If A: Probability Spam,     B: Probability of word,     then:
     P(Email is spam given that email contains word) = P(Word given email is spam)P(received spam email)  / P(probability of word)
     P(Email is spam given that email contains word) = P(Word given email is spam)P(received spam email)  / P(word given that email is spam)P(spam) + P(word given that email is ham)P(ham)
+
+    
 
     
 
