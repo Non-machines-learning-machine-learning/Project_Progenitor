@@ -71,10 +71,16 @@ sklearn.feature_extraction.text.CountVectorizer
     Sparse matrix, a large matrix or 2d-array with a lot elements being zero, 
     There are seven different types of SciPy sparse matrices, one used here is: csr_matrix: Compressed Sparse Row matrix
 
-cv = CountVectorizer(....)
-cv.fit_transform(iterable of docs)
+    cv = CountVectorizer(stop_words="english", max_features=500)
+        
+        cv.fit(list of docs)    - learn vocabulary
 
-    Returns a term-document matrix. docs listed in the first column of each row, words for each column of the first row, frequency populating
+        cv.get_feature_names()  - return list of feature names
+
+        cv.fit_transform(iterable of docs)
+            Returns a term-document matrix. docs along the rows, terms along the columns, frequency populating
+            .shape  - return tuple (rows, columns)
+            .toarray()     - returns fully populated array representation of spare matrix
 
 
 *** classification
@@ -96,6 +102,9 @@ cv.fit_transform(iterable of docs)
     P(A|B) = [P(B|A)P(A)] / P(B)
 
     P(B) is called the 'Prior': it portrays how classes are distributed with no knolwedge of observation features (i.e 40% spam)
+    P(B|A) is called the likely hood: it portays how likely a feature with such a value (spam) is 
+    
+
     
 
     Example: (Check if correct!)

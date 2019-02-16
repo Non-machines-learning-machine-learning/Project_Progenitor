@@ -5,6 +5,7 @@ from nltk.corpus import names
 from nltk.stem.porter import PorterStemmer
 from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import CountVectorizer
+import inspect
 
 all_names = set(names.words())
 
@@ -43,13 +44,41 @@ path2 = '/Users/DC/Desktop/Python Machine Learning/Python Machine Learning by Ex
 spam_emails = [clean_doc(doc) for doc in get_text_files(path1, 'ISO-8859-1')[0:50]] #limited set of emails for testing
 ham_emails = [clean_doc(doc) for doc in get_text_files(path2, 'ISO-8859-1')[0:50]] #limited set of emails for testing
 vectorizer = CountVectorizer(stop_words="english", max_features=500)
-vectorizer.fit(spam_emails + ham_emails)
-term_spam_emails = vectorizer.transform(spam_emails)
-term_ham_emails = vectorizer.transform(ham_emails)
 
-#print(vectorizer.get_feature_names())
-#print(term_ham_emails.toarray())
+vectorizer.fit(spam_emails)
+
+emails = spam_emails + ham_emails
+term_document_matrix = vectorizer.transform(emails)
 
 spam_prior = len(spam_emails)/(len(spam_emails)+len(ham_emails))
+
+def get_likelyhood(term_document_matrix, target_documents, smoothing=0):
+    """Returns probabilty of each term given a target document"""
+    target_term_count = {}
+    term_likelyhood = {}
+    total_term_count = (term_document_matrix[0:target_documents,:].sum() + smoothing).sum()
+    for term_index in range(term_document_matrix.shape[1]):
+        target_term_count[term_index] = term_document_matrix[0:target_documents,term_index].sum() + smoothing
+        term_likelyhood[term_index] = target_term_count[term_index] / total_term_count
+    return term_likelyhood
+
+def get_occurances(term_document_matrix, smoothing=0):
+    """Returns probabilty of each term"""
+    target_term_count = {}
+    term_likelyhood = {}
+    total_term_count = (term_document_matrix[:,:].sum() + smoothing).sum()
+    for term_index in range(term_document_matrix.shape[1]):
+        target_term_count[term_index] = term_document_matrix[:,term_index].sum() + smoothing
+        term_likelyhood[term_index] = target_term_count[term_index] / total_term_count
+    return term_likelyhood
+
+term_likelyhood = get_likelyhood(term_document_matrix, len(spam_emails))
+term_occurance = get_occurances(term_document_matrix)
+
+def estimate_spam(word):
+    index = vectorizer.vocabulary_[word]
+    return (term_likelyhood[index] * spam_prior) / term_occurance[index]
+
+print(estimate_spam('selll'))
 
 
